@@ -270,6 +270,14 @@
   @media (max-width:600px){
     .header-inner{flex-direction:column; align-items:flex-start;}
   }
+  .product-img{
+    width:80px;
+    height:80px;
+    object-fit:cover;
+    border-radius:10px;
+    display:block;
+    margin:auto;
+}
 </style>
 </head>
 <body>
@@ -353,7 +361,7 @@
         card.className = "card";
         card.innerHTML = `
           <div class="price-tag">₹${p.price}</div>
-          <div class="card-top"><img src="${p.icon}" width="60" height="60"></div>
+          <div class="card-top"><img src="${p.icon}" class="product-img">" class="product-img"> width="60" height="60"></div>
           <div class="card-body">
             <div class="name-hi">${p.name_hi}</div>
             <div class="name-en">${p.name_en}</div>
