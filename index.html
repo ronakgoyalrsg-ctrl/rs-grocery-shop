@@ -102,10 +102,79 @@
     color:var(--ink);
   }
 
+  /* ---------- Search bar ---------- */
+  .search-wrap{
+    max-width:1080px;
+    margin:22px auto 0;
+    padding:0 20px;
+  }
+  .search-box{
+    position:relative;
+    background:#fff;
+    border-radius:16px;
+    box-shadow:0 12px 28px -14px rgba(31,90,61,0.35), 0 2px 6px rgba(38,35,29,0.06);
+    border:1.5px solid var(--border-soft);
+    display:flex;
+    align-items:center;
+    padding:4px 4px 4px 18px;
+    transition:box-shadow .2s ease, border-color .2s ease;
+  }
+  .search-box:focus-within{
+    border-color:var(--mustard);
+    box-shadow:0 14px 30px -12px rgba(232,169,58,0.45), 0 2px 6px rgba(38,35,29,0.08);
+  }
+  .search-box .icon{
+    font-size:18px;
+    color:var(--green);
+    flex:0 0 auto;
+  }
+  .search-box input{
+    flex:1;
+    border:none;
+    outline:none;
+    font-family:'Inter', sans-serif;
+    font-size:15.5px;
+    padding:13px 10px;
+    background:transparent;
+    color:var(--ink);
+  }
+  .search-box input::placeholder{
+    color:#9c9686;
+  }
+  .search-clear{
+    display:none;
+    align-items:center;
+    justify-content:center;
+    width:30px;
+    height:30px;
+    border-radius:50%;
+    background:#F3EEDF;
+    color:var(--ink);
+    font-size:15px;
+    flex:0 0 auto;
+    margin-right:4px;
+  }
+  .search-clear.show{display:flex;}
+  .search-meta{
+    font-size:13px;
+    color:#6b6558;
+    margin-top:8px;
+    padding-left:4px;
+    min-height:18px;
+  }
+  .search-meta b{color:var(--brick);}
+  .no-results{
+    text-align:center;
+    padding:40px 20px;
+    color:#6b6558;
+    font-size:15px;
+  }
+  .no-results .emoji{font-size:34px; margin-bottom:10px;}
+
   /* ---------- Category nav ---------- */
   .cat-nav{
     max-width:1080px;
-    margin:28px auto 0;
+    margin:16px auto 0;
     padding:0 20px;
     display:flex;
     gap:10px;
@@ -189,6 +258,12 @@
     font-family:'Baloo 2', sans-serif;
     font-weight:700;
     font-size:17px;
+  }
+  .card-body .name-hi mark{
+    background:rgba(232,169,58,0.45);
+    color:inherit;
+    border-radius:3px;
+    padding:0 1px;
   }
   .card-body .name-en{
     font-size:12.5px;
@@ -296,6 +371,15 @@
   </div>
 </header>
 
+<div class="search-wrap">
+  <div class="search-box">
+    <span class="icon">🔍</span>
+    <input type="text" id="searchInput" placeholder="सामान खोजें... जैसे चावल, तेल, साबुन" autocomplete="off" />
+    <span class="search-clear" id="searchClear">✕</span>
+  </div>
+  <div class="search-meta" id="searchMeta"></div>
+</div>
+
 <nav class="cat-nav" id="catNav">
   <button class="cat-chip active" data-cat="all">सभी</button>
   <button class="cat-chip" data-cat="grains">अनाज व दालें</button>
@@ -351,39 +435,95 @@
 
   const grid = document.getElementById('productGrid');
   const phone = "918239304424";
+  const searchInput = document.getElementById('searchInput');
+  const searchClear = document.getElementById('searchClear');
+  const searchMeta = document.getElementById('searchMeta');
+  const catNav = document.getElementById('catNav');
 
-  function render(filter){
-    grid.innerHTML = "";
-    products
-      .filter(p => filter === "all" || p.cat === filter)
-      .forEach(p => {
-        const msg = encodeURIComponent(`नमस्ते RS Grocery Shop, मुझे यह ऑर्डर करना है: ${p.name_hi} (${p.qty}) - ₹${p.price}`);
-        const card = document.createElement('div');
-        card.className = "card";
-        card.innerHTML = `
-          <div class="price-tag">₹${p.price}</div>
-          <div class="card-top">
-    <img src="${p.icon}" class="product-img" width="60" height="60">
-</div>
-          <div class="card-body">
-            <div class="name-hi">${p.name_hi}</div>
-            <div class="name-en">${p.name_en}</div>
-            <div class="qty">${p.qty}</div>
-            <a class="order-btn" href="https://wa.me/${phone}?text=${msg}" target="_blank" rel="noopener">💬 ऑर्डर करें</a>
-          </div>
-        `;
-        grid.appendChild(card);
-      });
+  let activeCat = "all";
+  let searchTerm = "";
+
+  function highlight(text, term){
+    if(!term) return text;
+    const idx = text.toLowerCase().indexOf(term.toLowerCase());
+    if(idx === -1) return text;
+    return text.slice(0, idx) + "<mark>" + text.slice(idx, idx + term.length) + "</mark>" + text.slice(idx + term.length);
   }
 
-  document.getElementById('catNav').addEventListener('click', (e) => {
+  function render(){
+    const term = searchTerm.trim().toLowerCase();
+
+    let list = products.filter(p => activeCat === "all" || p.cat === activeCat);
+
+    if(term){
+      list = list.filter(p =>
+        p.name_hi.toLowerCase().includes(term) ||
+        p.name_en.toLowerCase().includes(term)
+      );
+    }
+
+    grid.innerHTML = "";
+
+    if(term){
+      searchMeta.innerHTML = list.length
+        ? `<b>${list.length}</b> सामान मिला "<b>${searchTerm}</b>" के लिए`
+        : "";
+    } else {
+      searchMeta.innerHTML = "";
+    }
+
+    if(list.length === 0){
+      grid.innerHTML = `
+        <div class="no-results" style="grid-column:1/-1;">
+          <div class="emoji">🔎</div>
+          कोई सामान नहीं मिला। कृपया दूसरे नाम से खोजें या हमें व्हाट्सएप करें।
+        </div>`;
+      return;
+    }
+
+    list.forEach(p => {
+      const msg = encodeURIComponent(`नमस्ते RS Grocery Shop, मुझे यह ऑर्डर करना है: ${p.name_hi} (${p.qty}) - ₹${p.price}`);
+      const card = document.createElement('div');
+      card.className = "card";
+      card.innerHTML = `
+        <div class="price-tag">₹${p.price}</div>
+        <div class="card-top">
+  <img src="${p.icon}" class="product-img" width="60" height="60">
+</div>
+        <div class="card-body">
+          <div class="name-hi">${highlight(p.name_hi, term)}</div>
+          <div class="name-en">${p.name_en}</div>
+          <div class="qty">${p.qty}</div>
+          <a class="order-btn" href="https://wa.me/${phone}?text=${msg}" target="_blank" rel="noopener">💬 ऑर्डर करें</a>
+        </div>
+      `;
+      grid.appendChild(card);
+    });
+  }
+
+  searchInput.addEventListener('input', (e) => {
+    searchTerm = e.target.value;
+    searchClear.classList.toggle('show', searchTerm.length > 0);
+    render();
+  });
+
+  searchClear.addEventListener('click', () => {
+    searchTerm = "";
+    searchInput.value = "";
+    searchClear.classList.remove('show');
+    searchInput.focus();
+    render();
+  });
+
+  catNav.addEventListener('click', (e) => {
     if(!e.target.classList.contains('cat-chip')) return;
     document.querySelectorAll('.cat-chip').forEach(c => c.classList.remove('active'));
     e.target.classList.add('active');
-    render(e.target.dataset.cat);
+    activeCat = e.target.dataset.cat;
+    render();
   });
 
-  render('all');
+  render();
 </script>
 
 </body>
