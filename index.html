@@ -1,530 +1,466 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="hi">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>RS Grocery Shop</title>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width,initial-scale=1" />
+<title>RS Grocery Shop — राशन, मसाले, तेल-घी ऑनलाइन ऑर्डर करें</title>
+<meta name="description" content="RS Grocery Shop पर बासमती चावल, दालें, मसाले, तेल-घी और रोज़मर्रा का सामान ऑर्डर करें। 38+ वर्षों का भरोसा।" />
+<meta property="og:title" content="RS Grocery Shop" />
+<meta property="og:description" content="Trusted neighborhood grocery — order online via WhatsApp." />
 <link rel="preconnect" href="https://fonts.googleapis.com">
-<link href="https://fonts.googleapis.com/css2?family=Baloo+2:wght@500;600;700;800&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Baloo+2:wght@500;700;800&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
 <style>
   :root{
-    --green: #1F5A3D;
-    --green-light: #2E7D52;
-    --mustard: #E8A93A;
-    --brick: #C0432B;
-    --cream: #FBF6EA;
-    --ink: #26231D;
-    --card-bg: #FFFFFF;
-    --border-soft: rgba(38,35,29,0.08);
+    --bg:#eefdec; --card:#ffffff; --ink:#2a1e0f; --muted:#7a6a55;
+    --border:#ecd9b3; --brand:#141d38; --brand-deep:#258031;
+    --mustard:#fcdb32; --mustard-deep:#d19f00;
+    --brick:#141d38; --brick-deep:#209e2a;
+    --shadow-soft:0 6px 20px rgba(30, 63, 30, 0.432);
+    --shadow-lift:0 14px 30px rgba(60,40,10,.16);
   }
-  *{box-sizing:border-box; margin:0; padding:0;}
-  body{
-    font-family:'Inter', sans-serif;
-    background:var(--cream);
-    color:var(--ink);
-    line-height:1.5;
-  }
-  h1,h2,h3, .display{
-    font-family:'Baloo 2', sans-serif;
-  }
-  img, svg{max-width:100%; display:block;}
-  a{text-decoration:none; color:inherit;}
-  button{font-family:inherit; cursor:pointer; border:none;}
+  *{box-sizing:border-box}
+  html,body{margin:0;padding:0}
+  body{font-family:Inter,system-ui,sans-serif;color:var(--ink);background:var(--bg)}
+  h1,h2,h3,.display{font-family:"Baloo 2",Inter,sans-serif;font-weight:800;letter-spacing:-.01em}
+  a{color:inherit;text-decoration:none}
+  button{font:inherit;cursor:pointer;border:none;background:none;color:inherit}
+  img{display:block;max-width:100%}
+  .container{max-width:1120px;margin:0 auto;padding:0 20px}
 
-  /* ---------- Header ---------- */
-  header{
-    background: linear-gradient(160deg, var(--green) 0%, var(--green-light) 100%);
-    color:#fff;
-    padding: 40px 20px 32px;
-    position:relative;
-    overflow:hidden;
-  }
-  header::after{
-    content:"";
-    position:absolute;
-    left:0; right:0; bottom:0;
-    height:10px;
-    background: repeating-linear-gradient(90deg, var(--mustard) 0 18px, var(--brick) 18px 36px);
-    opacity:0.85;
-  }
-  .header-inner{
-    max-width:1080px;
-    margin:0 auto;
-    display:flex;
-    flex-wrap:wrap;
-    align-items:center;
-    justify-content:space-between;
-    gap:20px;
-  }
-  .shop-brand .eyebrow{
-    font-size:13px;
-    letter-spacing:2px;
-    text-transform:uppercase;
-    color:var(--mustard);
-    font-weight:600;
-    margin-bottom:6px;
-  }
-  .shop-brand h1{
-    font-size:clamp(32px, 6vw, 48px);
-    font-weight:800;
-    line-height:1.1;
-  }
-  .shop-brand p{
-    margin-top:8px;
-    color:#EAF3EC;
-    font-size:16px;
-    max-width:420px;
-  }
-  .header-actions{
-    display:flex;
-    flex-direction:column;
-    gap:10px;
-    align-items:flex-start;
-  }
-  .pill-btn{
-    display:inline-flex;
-    align-items:center;
-    gap:8px;
-    padding:11px 18px;
-    border-radius:999px;
-    font-weight:600;
-    font-size:15px;
-    transition:transform .15s ease;
-  }
-  .pill-btn:hover{transform:translateY(-2px);}
-  .pill-call{
-    background:rgba(255,255,255,0.12);
-    color:#fff;
-    border:1px solid rgba(255,255,255,0.35);
-  }
-  .pill-whatsapp{
-    background:var(--mustard);
-    color:var(--ink);
-  }
+  /* header */
+  header.site{background:var(--brand);color:#fff;position:relative;overflow:hidden}
+  header.site::before{content:"";position:absolute;inset:0;background-image:radial-gradient(rgba(255,255,255,.18) 1.2px,transparent 1.2px);background-size:22px 22px;opacity:.3;pointer-events:none}
+  header.site::after{content:"";position:absolute;left:0;right:0;bottom:0;height:8px;background:repeating-linear-gradient(90deg,var(--mustard) 0 18px,var(--brick) 18px 36px)}
+  .headwrap{display:flex;flex-wrap:wrap;gap:16px;align-items:center;justify-content:space-between;padding:24px 20px 32px}
+  .logo{display:flex;gap:12px;align-items:center}
+  .logo .box{width:44px;height:44px;border-radius:12px;background:var(--mustard);color:var(--ink);display:flex;align-items:center;justify-content:center;font-size:22px;box-shadow:var(--shadow-lift)}
+  .logo .kicker{font-size:10px;font-weight:700;letter-spacing:.18em;text-transform:uppercase;color:var(--mustard)}
+  .logo h1{font-size:26px;margin:0;line-height:1.1}
+  .head-actions{display:flex;gap:8px;align-items:center}
+  .pill{display:inline-flex;gap:8px;align-items:center;padding:8px 16px;border-radius:999px;font-weight:700;font-size:14px}
+  .pill.ghost{background:rgba(255,255,255,.1);border:1px solid rgba(255,255,255,.25);color:#fff}
+  .pill.solid{background:#fff;color:var(--brand-deep);position:relative}
+  .badge{position:absolute;top:-4px;right:-4px;background:var(--brick);color:#fff;font-weight:800;font-size:11px;height:20px;min-width:20px;padding:0 4px;border-radius:999px;display:inline-flex;align-items:center;justify-content:center}
 
-  /* ---------- Search bar ---------- */
-  .search-wrap{
-    max-width:1080px;
-    margin:22px auto 0;
-    padding:0 20px;
-  }
-  .search-box{
-    position:relative;
-    background:#fff;
-    border-radius:16px;
-    box-shadow:0 12px 28px -14px rgba(31,90,61,0.35), 0 2px 6px rgba(38,35,29,0.06);
-    border:1.5px solid var(--border-soft);
-    display:flex;
-    align-items:center;
-    padding:4px 4px 4px 18px;
-    transition:box-shadow .2s ease, border-color .2s ease;
-  }
-  .search-box:focus-within{
-    border-color:var(--mustard);
-    box-shadow:0 14px 30px -12px rgba(232,169,58,0.45), 0 2px 6px rgba(38,35,29,0.08);
-  }
-  .search-box .icon{
-    font-size:18px;
-    color:var(--green);
-    flex:0 0 auto;
-  }
-  .search-box input{
-    flex:1;
-    border:none;
-    outline:none;
-    font-family:'Inter', sans-serif;
-    font-size:15.5px;
-    padding:13px 10px;
-    background:transparent;
-    color:var(--ink);
-  }
-  .search-box input::placeholder{
-    color:#9c9686;
-  }
-  .search-clear{
-    display:none;
-    align-items:center;
-    justify-content:center;
-    width:30px;
-    height:30px;
-    border-radius:50%;
-    background:#F3EEDF;
-    color:var(--ink);
-    font-size:15px;
-    flex:0 0 auto;
-    margin-right:4px;
-  }
-  .search-clear.show{display:flex;}
-  .search-meta{
-    font-size:13px;
-    color:#6b6558;
-    margin-top:8px;
-    padding-left:4px;
-    min-height:18px;
-  }
-  .search-meta b{color:var(--brick);}
-  .no-results{
-    text-align:center;
-    padding:40px 20px;
-    color:#6b6558;
-    font-size:15px;
-  }
-  .no-results .emoji{font-size:34px; margin-bottom:10px;}
+  /* main */
+  main{max-width:1120px;margin:0 auto;padding:32px 20px 140px}
+  .search{width:100%;padding:14px 20px;border-radius:16px;border:1px solid var(--border);background:var(--card);box-shadow:var(--shadow-soft);font-size:16px;outline:none}
+  .search:focus{border-color:var(--mustard);box-shadow:0 0 0 4px rgba(242,185,10,.25)}
+  .cats{display:flex;gap:8px;overflow-x:auto;margin:20px -4px;padding:0 4px}
+  .cats::-webkit-scrollbar{display:none}
+  .cat{flex:0 0 auto;padding:8px 16px;border-radius:999px;border:1px solid var(--border);background:var(--card);font-weight:700;font-size:14px;color:var(--ink);white-space:nowrap}
+  .cat.active{background:var(--brand);color:#fff;border-color:var(--brand);box-shadow:var(--shadow-soft)}
 
-  /* ---------- Category nav ---------- */
-  .cat-nav{
-    max-width:1080px;
-    margin:16px auto 0;
-    padding:0 20px;
-    display:flex;
-    gap:10px;
-    overflow-x:auto;
-    scrollbar-width:none;
-  }
-  .cat-nav::-webkit-scrollbar{display:none;}
-  .cat-chip{
-    flex:0 0 auto;
-    padding:9px 18px;
-    border-radius:999px;
-    background:#fff;
-    border:1.5px solid var(--border-soft);
-    font-weight:600;
-    font-size:14px;
-    color:var(--ink);
-    white-space:nowrap;
-  }
-  .cat-chip.active{
-    background:var(--green);
-    border-color:var(--green);
-    color:#fff;
-  }
+  .grid{display:grid;gap:16px;grid-template-columns:repeat(auto-fill,minmax(230px,1fr))}
+  .card{background:var(--card);border:1px solid var(--border);border-radius:16px;overflow:hidden;box-shadow:var(--shadow-soft);display:flex;flex-direction:column;transition:transform .15s,box-shadow .15s}
+  .card:hover{transform:translateY(-4px);box-shadow:var(--shadow-lift)}
+  .card .imgwrap{position:relative;aspect-ratio:1/1;background:#faf1de}
+  .card .imgwrap img{width:100%;height:100%;object-fit:cover}
+  .price-chip{position:absolute;top:12px;right:0;background:var(--mustard);color:var(--ink);font-weight:800;font-size:12px;padding:4px 12px;border-radius:6px 0 0 6px;box-shadow:0 2px 6px rgba(0,0,0,.15)}
+  .card .body{padding:14px;display:flex;flex-direction:column;gap:4px;flex:1}
+  .card h3{margin:0;font-size:16px;line-height:1.2}
+  .card .sub{font-size:12px;color:var(--muted)}
+  .row{display:flex;align-items:center;justify-content:space-between;gap:8px;margin-top:12px}
+  .stepper{display:inline-flex;align-items:center;border:1px solid var(--border);border-radius:8px;overflow:hidden;background:#fff}
+  .stepper button{width:32px;height:32px;font-size:18px;font-weight:800;color:var(--brand-deep)}
+  .stepper input{width:34px;height:32px;text-align:center;border:none;outline:none;font-weight:700;font-size:14px;background:transparent}
+  .total{text-align:right}
+  .total .l{font-size:10px;text-transform:uppercase;letter-spacing:.05em;color:var(--muted)}
+  .total .v{font-family:"Baloo 2";font-weight:800;color:var(--brand-deep);font-size:16px}
+  .actions{margin-top:12px;display:grid;grid-template-columns:1fr 1fr;gap:8px}
+  .btn{padding:9px 12px;border-radius:8px;font-size:14px;font-weight:700;text-align:center;display:inline-flex;align-items:center;justify-content:center;gap:6px;transition:.15s}
+  .btn.add{background:rgba(47,107,58,.1);color:var(--brand-deep);border:1px solid rgba(47,107,58,.25)}
+  .btn.add:hover{background:rgba(47,107,58,.16)}
+  .btn.buy{background:var(--brick);color:#fff}
+  .btn.buy:hover{background:var(--brick-deep)}
+  .btn.big{padding:14px;font-size:14px;width:100%;border-radius:12px}
+  .btn.wa{background:#25d34b;color:#fff}
+  .btn.brand{background:var(--brand);color:#fff}
+  .btn.brand:hover{background:var(--brand-deep)}
 
-  /* ---------- Product grid ---------- */
-  main{
-    max-width:1080px;
-    margin:0 auto;
-    padding:24px 20px 60px;
-  }
-  .grid{
-    display:grid;
-    grid-template-columns:repeat(auto-fill, minmax(230px, 1fr));
-    gap:18px;
-    margin-top:18px;
-  }
-  .card{
-    background:var(--card-bg);
-    border-radius:16px;
-    overflow:hidden;
-    border:1px solid var(--border-soft);
-    position:relative;
-    display:flex;
-    flex-direction:column;
-    transition:transform .15s ease, box-shadow .15s ease;
-  }
-  .card:hover{
-    transform:translateY(-3px);
-    box-shadow:0 10px 24px -12px rgba(31,90,61,0.35);
-  }
-  .card-top{
-    background:
-      repeating-linear-gradient(45deg, rgba(31,90,61,0.06) 0 6px, transparent 6px 12px),
-      #F3EEDF;
-    height:96px;
-    display:flex;
-    align-items:center;
-    justify-content:center;
-    font-size:42px;
-  }
-  .price-tag{
-    position:absolute;
-    top:10px;
-    right:-6px;
-    background:var(--mustard);
-    color:var(--ink);
-    font-weight:700;
-    font-size:13px;
-    padding:5px 14px 5px 10px;
-    border-radius:6px 0 0 6px;
-    box-shadow:-2px 2px 0 rgba(0,0,0,0.08);
-  }
-  .card-body{
-    padding:14px 16px 16px;
-    display:flex;
-    flex-direction:column;
-    gap:4px;
-    flex:1;
-  }
-  .card-body .name-hi{
-    font-family:'Baloo 2', sans-serif;
-    font-weight:700;
-    font-size:17px;
-  }
-  .card-body .name-hi mark{
-    background:rgba(232,169,58,0.45);
-    color:inherit;
-    border-radius:3px;
-    padding:0 1px;
-  }
-  .card-body .name-en{
-    font-size:12.5px;
-    color:#6b6558;
-  }
-  .card-body .qty{
-    font-size:13px;
-    color:#6b6558;
-    margin-bottom:8px;
-  }
-  .order-btn{
-    margin-top:auto;
-    background:var(--brick);
-    color:#fff;
-    padding:9px 12px;
-    border-radius:10px;
-    font-weight:600;
-    font-size:13.5px;
-    text-align:center;
-    display:flex;
-    align-items:center;
-    justify-content:center;
-    gap:6px;
-  }
-  .order-btn:hover{background:#a8371f;}
+  /* testimonials */
+  .test{margin-top:48px}
+  .test h2{font-size:26px;color:var(--brand-deep);margin:0 0 6px}
+  .test .lead{color:var(--muted);margin:0 0 20px;font-size:14px}
+  .tgrid{display:grid;gap:16px;grid-template-columns:repeat(auto-fit,minmax(260px,1fr))}
+  .quote{background:var(--card);border:1px solid var(--border);border-radius:16px;padding:20px;box-shadow:var(--shadow-soft)}
+  .stars{color:var(--mustard);font-size:16px;letter-spacing:2px}
+  .quote p{margin:8px 0 10px;font-size:14px;line-height:1.5}
+  .quote .who{font-weight:700;font-size:13px;color:var(--brand-deep)}
+  .why{margin-top:28px;background:var(--brand);color:#ffffff;border-radius:20px;padding:26px;display:grid;grid-template-columns:repeat(auto-fit,minmax(180px,1fr));gap:20px}
+  .why div h4{font-family:"Baloo 2";font-size:22px;margin:0;color:var(--mustard)}
+  .why div p{margin:4px 0 0;font-size:13px;opacity:.9}
 
-  /* ---------- Contact section ---------- */
-  .contact{
-    background:var(--green);
-    color:#fff;
-    padding:44px 20px;
-    text-align:center;
-  }
-  .contact h2{
-    font-size:26px;
-    margin-bottom:8px;
-  }
-  .contact p{
-    color:#DCEBE1;
-    max-width:440px;
-    margin:0 auto 20px;
-  }
-  .contact-actions{
-    display:flex;
-    gap:12px;
-    justify-content:center;
-    flex-wrap:wrap;
-  }
+  /* bottom bar */
+  .bottombar{position:fixed;left:0;right:0;bottom:0;z-index:50;padding:12px;display:flex;justify-content:center;pointer-events:none}
+  .bottombar.hidden{display:none}
+  .bottombar .inner{pointer-events:auto;max-width:720px;width:100%;background:var(--brand-deep);color:#fff;border-radius:16px;padding:12px 16px;display:flex;align-items:center;justify-content:space-between;gap:12px;box-shadow:var(--shadow-lift);animation:slideup .3s ease}
+  @keyframes slideup{from{transform:translateY(20px);opacity:0}to{transform:none;opacity:1}}
+  .bottombar .icon{position:relative;width:40px;height:40px;background:var(--mustard);color:var(--ink);border-radius:12px;display:flex;align-items:center;justify-content:center;font-size:20px}
+  .bottombar .meta{display:flex;gap:12px;align-items:center}
+  .bottombar .lbl{font-size:11px;text-transform:uppercase;letter-spacing:.05em;color:rgba(255,255,255,.7)}
+  .bottombar .amt{font-family:"Baloo 2";font-weight:800;font-size:18px;line-height:1}
 
-  footer{
-    text-align:center;
-    padding:18px;
-    font-size:12.5px;
-    color:#8b8578;
-  }
+  /* modal (cart & checkout) */
+  .overlay{position:fixed;inset:0;background:rgba(20,10,0,.55);display:none;align-items:flex-start;justify-content:center;padding:20px;z-index:100;overflow-y:auto}
+  .overlay.open{display:flex}
+  .sheet{background:var(--bg);width:100%;max-width:640px;border-radius:20px;overflow:hidden;box-shadow:var(--shadow-lift);margin:20px 0}
+  .sheet header{background:var(--brand);color:#fff;padding:18px 20px;display:flex;align-items:center;justify-content:space-between}
+  .sheet header h2{margin:0;font-size:22px}
+  .sheet .close{font-size:24px;font-weight:800;color:#fff;padding:4px 10px;border-radius:8px}
+  .sheet .body{padding:20px}
+  .cart-item{display:flex;gap:12px;align-items:center;padding:12px 0;border-bottom:1px solid var(--border)}
+  .cart-item img{width:56px;height:56px;border-radius:10px;object-fit:cover;background:#faf1de}
+  .cart-item .info{flex:1;min-width:0}
+  .cart-item .n{font-weight:700;font-size:14px}
+  .cart-item .p{font-size:12px;color:var(--muted)}
+  .cart-item .rm{color:var(--brick);font-weight:700;font-size:13px;padding:4px 8px}
+  .summary{margin-top:16px;padding-top:12px;border-top:2px solid var(--border);display:flex;justify-content:space-between;font-family:"Baloo 2";font-weight:800;font-size:20px;color:var(--brand-deep)}
+  .field{margin-bottom:14px}
+  .field label{display:block;font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:.05em;color:var(--muted);margin-bottom:6px}
+  .field input,.field textarea{width:100%;padding:10px 12px;border:1px solid var(--border);background:#fff;border-radius:8px;font:inherit;outline:none}
+  .field input:focus,.field textarea:focus{border-color:var(--mustard);box-shadow:0 0 0 3px rgba(242,185,10,.3)}
+  .empty{text-align:center;padding:40px 20px;color:var(--muted)}
 
-  /* ---------- Floating WhatsApp ---------- */
-  .float-wa{
-    position:fixed;
-    bottom:20px;
-    right:20px;
-    background:#25D366;
-    color:#fff;
-    width:56px;
-    height:56px;
-    border-radius:50%;
-    display:flex;
-    align-items:center;
-    justify-content:center;
-    font-size:26px;
-    box-shadow:0 6px 16px rgba(0,0,0,0.25);
-    z-index:50;
-  }
+  .toast{position:fixed;top:20px;right:20px;background:var(--brand-deep);color:#fff;padding:12px 18px;border-radius:12px;font-size:14px;font-weight:600;box-shadow:var(--shadow-lift);z-index:200;opacity:0;transform:translateY(-10px);transition:.25s}
+  .toast.show{opacity:1;transform:none}
 
-  @media (prefers-reduced-motion: reduce){
-    *{transition:none !important;}
+  @media (max-width:520px){
+    .headwrap{padding:18px 16px 26px}
+    .logo h1{font-size:22px}
+    main{padding:20px 16px 140px}
+    .grid{grid-template-columns:repeat(auto-fill,minmax(160px,1fr));gap:12px}
+    .card .body{padding:10px}
+    .card h3{font-size:14px}
+    .btn{font-size:12px;padding:7px 8px}
   }
-
-  @media (max-width:600px){
-    .header-inner{flex-direction:column; align-items:flex-start;}
-  }
-  .product-img{
-    width:80px;
-    height:80px;
-    object-fit:cover;
-    border-radius:10px;
-    display:block;
-    margin:auto;
-}
 </style>
 </head>
 <body>
 
-<header>
-  <div class="header-inner">
-    <div class="shop-brand">
-      <div class="eyebrow">आपका भरोसेमंद परचून वाला</div>
-      <h1>RS Grocery Shop</h1>
-      <p>राशन, मसाले, तेल-घी और रोज़मर्रा का सामान — अब घर बैठे ऑर्डर करें।</p>
-    </div>
-    <div class="header-actions">
-      <a class="pill-btn pill-call" href="tel:+918239304424">📞 8239304424</a>
-      <a class="pill-btn pill-whatsapp" href="https://wa.me/918239304424?text=नमस्ते%20RS%20Grocery%20Shop%2C%20मुझे%20सामान%20ऑर्डर%20करना%20है" target="_blank" rel="noopener">💬 व्हाट्सएप पर ऑर्डर करें</a>
+<header class="site">
+  <div class="headwrap container">
+    <a href="#" class="logo" onclick="event.preventDefault();showHome()">
+      <div class="box">🛒</div>
+      <div>
+        <div class="kicker">38+ वर्षों का भरोसा</div>
+        <h1>RS Grocery Shop</h1>
+      </div>
+    </a>
+    <div class="head-actions">
+      <a href="tel:+918239304424" class="pill ghost">📞 8239304424</a>
+      <button class="pill solid" onclick="openCart()">
+        🛍️ Cart <span class="badge" id="hdrBadge" style="display:none">0</span>
+      </button>
     </div>
   </div>
 </header>
 
-<div class="search-wrap">
-  <div class="search-box">
-    <span class="icon">🔍</span>
-    <input type="text" id="searchInput" placeholder="सामान खोजें... जैसे चावल, तेल, साबुन" autocomplete="off" />
-    <span class="search-clear" id="searchClear">✕</span>
-  </div>
-  <div class="search-meta" id="searchMeta"></div>
-</div>
-
-<nav class="cat-nav" id="catNav">
-  <button class="cat-chip active" data-cat="all">सभी</button>
-  <button class="cat-chip" data-cat="grains">अनाज व दालें</button>
-  <button class="cat-chip" data-cat="oil">तेल व घी</button>
-  <button class="cat-chip" data-cat="spices">मसाले</button>
-  <button class="cat-chip" data-cat="snacks">नाश्ता व पेय</button>
-  <button class="cat-chip" data-cat="daily">दैनिक उपयोग</button>
-</nav>
-
 <main>
-  <div class="grid" id="productGrid"></div>
+  <input class="search" id="search" type="search" placeholder="Search rice, dal, masala…" />
+  <div class="cats" id="cats"></div>
+  <div class="grid" id="grid"></div>
+
+  <section class="test">
+    <h2>ग्राहकों की राय</h2>
+    <p class="lead">हमारे 1,000+ खुश ग्राहक</p>
+    <div class="tgrid">
+      <div class="quote"><div class="stars">★★★★★</div><p>"38 साल से इनसे राशन ले रहे हैं। कभी क्वालिटी में कमी नहीं आई। बासमती चावल की खुशबू ही अलग है।"</p><div class="who">— सुरेश शर्मा, नियमित ग्राहक</div></div>
+      <div class="quote"><div class="stars">★★★★★</div><p>"मसाले एकदम शुद्ध और घर की तरह पिसे हुए। घी की मिठास और स्वाद बाजार से अलग है।"</p><div class="who">— अंजलि गुप्ता</div></div>
+      <div class="quote"><div class="stars">★★★★★</div><p>"WhatsApp पर ऑर्डर करो । भइया की ईमानदारी और तौल पर पूरा भरोसा।"</p><div class="who">— रवि वर्मा</div></div>
+    </div>
+    <div class="why">
+      <div><h4>38+</h4><p>साल का अनुभव</p></div>
+      <div><h4>1K+</h4><p>खुश ग्राहक</p></div>
+      <div><h4>100%</h4><p>शुद्ध राशन</p></div>
+      <div><h4>RS Grocery Shop, Karauli, Rajasthan, 322241</h4></div>
+      
+    </div>
+  </section>
 </main>
 
-<div class="contact">
-  <h2>ऑर्डर या पूछताछ के लिए संपर्क करें</h2>
-  <p>सामान की उपलब्धता, कीमत या डिलीवरी से जुड़ी किसी भी जानकारी के लिए कॉल या व्हाट्सएप करें।</p>
-  <div class="contact-actions">
-    <a class="pill-btn pill-whatsapp" href="https://wa.me/918239304424" target="_blank" rel="noopener">💬 व्हाट्सएप करें</a>
-    <a class="pill-btn pill-call" href="tel:+918239304424" style="border-color:#fff;">📞 कॉल करें</a>
+<div class="bottombar hidden" id="bar">
+  <div class="inner">
+    <div class="meta">
+      <div class="icon">🛒<span class="badge" id="barBadge">0</span></div>
+      <div>
+        <div class="lbl"><span id="barItems">0</span> items</div>
+        <div class="amt">₹<span id="barTotal">0</span></div>
+      </div>
+    </div>
+    <button class="btn brand" onclick="openCart()" style="padding:10px 18px;background:var(--mustard);color:var(--ink)">View Cart →</button>
   </div>
 </div>
 
-<footer>
-  © RS Grocery Shop, Karauli, Rajasthan, 322241 — कीमतें बदल सकती हैं, कृपया ऑर्डर से पहले पुष्टि करें।
-</footer>
+<!-- Cart modal -->
+<div class="overlay" id="cartOverlay" onclick="if(event.target===this)closeCart()">
+  <div class="sheet">
+    <header>
+      <h2>आपका कार्ट</h2>
+      <button class="close" onclick="closeCart()">×</button>
+    </header>
+    <div class="body" id="cartBody"></div>
+  </div>
+</div>
 
-<a class="float-wa" href="https://wa.me/918239304424" target="_blank" rel="noopener" aria-label="WhatsApp पर संपर्क करें">💬</a>
+<!-- Checkout modal -->
+<div class="overlay" id="coOverlay" onclick="if(event.target===this)closeCo()">
+  <div class="sheet">
+    <header>
+      <h2>Checkout</h2>
+      <button class="close" onclick="closeCo()">×</button>
+    </header>
+    <div class="body" id="coBody"></div>
+  </div>
+</div>
+
+<div class="toast" id="toast"></div>
 
 <script>
-  // ---- यहाँ अपना सामान (products) आसानी से बदल/जोड़ सकते हैं ----
-  const products = [
-  {name_hi:"बासमती चावल", name_en:"Basmati Rice", qty:"5 kg", price:450, icon:"rice.jpg.png", cat:"grains"},
-  {name_hi:"तूर दाल", name_en:"Toor Dal", qty:"1 kg", price:140, icon:"toor.jpg.png", cat:"grains"},
-  {name_hi:"गेहूं आटा", name_en:"Wheat Atta", qty:"10 kg", price:380, icon:"wheet.jpg.png", cat:"grains"},
-  {name_hi:"चना दाल", name_en:"Chana Dal", qty:"1 kg", price:110, icon:"chana.jpg.png", cat:"grains"},
+const WHATSAPP_NUMBER = "918239304424";
 
-  {name_hi:"सरसों तेल", name_en:"Mustard Oil", qty:"1 लीटर", price:160, icon:"mustard.jpg.png", cat:"oil"},
-  {name_hi:"देसी घी", name_en:"Desi Ghee", qty:"500 ग्राम", price:320, icon:"ghee.jpg.png", cat:"oil"},
-  {name_hi:"रिफाइंड तेल", name_en:"Refined Oil", qty:"1 लीटर", price:140, icon:"refiend.jpg.png", cat:"oil"},
-
-  {name_hi:"हल्दी पाउडर", name_en:"Turmeric Powder", qty:"100 ग्राम", price:35, icon:"haldi.jpg.png", cat:"spices"},
-  {name_hi:"लाल मिर्च पाउडर", name_en:"Red Chilli Powder", qty:"100 ग्राम", price:40, icon:"mirchi.jpg.png", cat:"spices"},
-  {name_hi:"गरम मसाला", name_en:"Garam Masala", qty:"50 ग्राम", price:45, icon:"masala.jpg.png", cat:"spices"},
-    {name_hi:"धनिया पाउडर", name_en:"coriander Powder", qty:"100 ग्राम", price:35, icon:"dhaniya.jpg.png", cat:"spices"},
-
-  {name_hi:"पारले-जी बिस्किट", name_en:"Parle-G Biscuit", qty:"1 पैकेट", price:10, icon:"parle.jpg.png", cat:"snacks"},
-  {name_hi:"चाय पत्ती", name_en:"Tea Leaves", qty:"250 ग्राम", price:120, icon:"tea.jpg.png", cat:"snacks"},
-  {name_hi:"कोल्ड ड्रिंक", name_en:"Cold Drink", qty:"750 ml", price:40, icon:"drink.jpg.png", cat:"snacks"},
-
-  {name_hi:"नहाने का साबुन", name_en:"Bathing Soap", qty:"1 पीस", price:35, icon:"soap.jpg.png", cat:"daily"},
-  {name_hi:"डिटर्जेंट पाउडर", name_en:"Detergent Powder", qty:"1 kg", price:95, icon:"washing.jpg.png", cat:"daily"},
+const CATEGORIES = [
+  {id:"all",label:"सभी"},
+  {id:"grains",label:"अनाज व आटा"},
+  {id:"dals",label:"दालें"},
+  {id:"oils",label:"तेल व घी"},
+  {id:"sugar-salt",label:"चीनी व नमक"},
+  {id:"spices",label:"मसाले"},
+  {id:"dry-fruits",label:"ड्राई फ्रूट्स"},
+  {id:"others",label:"अन्य"},
 ];
 
-  const grid = document.getElementById('productGrid');
-  const phone = "918239304424";
-  const searchInput = document.getElementById('searchInput');
-  const searchClear = document.getElementById('searchClear');
-  const searchMeta = document.getElementById('searchMeta');
-  const catNav = document.getElementById('catNav');
+const PRODUCTS = [
+  {id:"basmati-rice",name:"Basmati Rice",nameHi:"बासमती चावल",category:"grains",unit:"kg",price:40,image:"images/basmati-rice.jpg"},
+  {id:"sona-masoori",name:"Sona Masoori Rice",nameHi:"सोना मसूरी",category:"grains",unit:"kg",price:55,image:"images/sona-masoori.jpg"},
+  {id:"wheat-atta",name:"Wheat Atta",nameHi:"गेहूँ आटा",category:"grains",unit:"kg",price:45,image:"images/wheat-atta.jpg"},
+  {id:"maida",name:"Maida",nameHi:"मैदा",category:"grains",unit:"kg",price:40,image:"images/maida.jpg"},
+  {id:"besan",name:"Besan",nameHi:"बेसन",category:"grains",unit:"kg",price:90,image:"images/besan.jpg"},
+  {id:"sooji",name:"Sooji / Rava",nameHi:"सूजी",category:"grains",unit:"kg",price:50,image:"images/sooji.jpg"},
+  {id:"toor-dal",name:"Toor Dal",nameHi:"तूर दाल",category:"dals",unit:"kg",price:140,image:"images/toor-dal.jpg"},
+  {id:"moong-dal",name:"Moong Dal",nameHi:"मूंग दाल",category:"dals",unit:"kg",price:120,image:"images/moong-dal.jpg"},
+  {id:"chana-dal",name:"Chana Dal",nameHi:"चना दाल",category:"dals",unit:"kg",price:90,image:"images/chana-dal.jpg"},
+  {id:"urad-dal",name:"Urad Dal",nameHi:"उड़द दाल",category:"dals",unit:"kg",price:130,image:"images/urad-dal.jpg"},
+  {id:"rajma",name:"Rajma",nameHi:"राजमा",category:"dals",unit:"kg",price:150,image:"images/rajma.jpg"},
+  {id:"chole",name:"Chole",nameHi:"छोले",category:"dals",unit:"kg",price:110,image:"images/chole.jpg"},
+  {id:"sunflower-oil",name:"Sunflower Oil",nameHi:"सूरजमुखी तेल",category:"oils",unit:"L",price:150,image:"images/sunflower-oil.jpg"},
+  {id:"mustard-oil",name:"Mustard Oil",nameHi:"सरसों तेल",category:"oils",unit:"L",price:170,image:"images/mustard-oil.jpg"},
+  {id:"desi-ghee",name:"Desi Ghee",nameHi:"देसी घी",category:"oils",unit:"kg",price:550,image:"images/desi-ghee.jpg"},
+  {id:"sugar",name:"Sugar",nameHi:"चीनी",category:"sugar-salt",unit:"kg",price:45,image:"images/sugar.jpg"},
+  {id:"salt",name:"Salt",nameHi:"नमक",category:"sugar-salt",unit:"kg",price:25,image:"images/salt.jpg"},
+  {id:"jaggery",name:"Jaggery / Gur",nameHi:"गुड़",category:"sugar-salt",unit:"kg",price:60,image:"images/jaggery.jpg"},
+  {id:"haldi",name:"Turmeric",nameHi:"हल्दी",category:"spices",unit:"100gm",price:35,image:"images/haldi.jpg"},
+  {id:"chilli",name:"Red Chilli Powder",nameHi:"लाल मिर्च",category:"spices",unit:"100gm",price:40,image:"images/chilli.jpg"},
+  {id:"dhaniya",name:"Coriander Powder",nameHi:"धनिया",category:"spices",unit:"100gm",price:35,image:"images/dhaniya.jpg"},
+  {id:"garam-masala",name:"Garam Masala",nameHi:"गरम मसाला",category:"spices",unit:"100gm",price:50,image:"images/garam-masala.jpg"},
+  {id:"jeera",name:"Cumin (Jeera)",nameHi:"जीरा",category:"spices",unit:"500gm",price:90,image:"images/jeera.jpg"},
+  {id:"almonds",name:"Almonds",nameHi:"बादाम",category:"dry-fruits",unit:"250gm",price:220,image:"images/almonds.jpg"},
+  {id:"cashews",name:"Cashews",nameHi:"काजू",category:"dry-fruits",unit:"250gm",price:230,image:"images/cashews.jpg"},
+  {id:"raisins",name:"Raisins",nameHi:"किशमिश",category:"dry-fruits",unit:"250gm",price:130,image:"images/raisins.jpg"},
+  {id:"tea",name:"Tea",nameHi:"चाय पत्ती",category:"others",unit:"kg",price:320,image:"images/tea.jpg"},
+  {id:"poha",name:"Poha",nameHi:"पोहा",category:"others",unit:"kg",price:60,image:"images/poha.jpg"},
+  {id:"vermicelli",name:"Vermicelli",nameHi:"सेवई",category:"others",unit:"kg",price:80,image:"images/vermicelli.jpg"},
+];
 
-  let activeCat = "all";
-  let searchTerm = "";
+const KEY = "rs-cart-v1";
+let cart = {};
+try { cart = JSON.parse(localStorage.getItem(KEY) || "{}"); } catch {}
+let currentCat = "all";
+let localQty = {}; // per-card qty
+let searchQ = "";
 
-  function highlight(text, term){
-    if(!term) return text;
-    const idx = text.toLowerCase().indexOf(term.toLowerCase());
-    if(idx === -1) return text;
-    return text.slice(0, idx) + "<mark>" + text.slice(idx, idx + term.length) + "</mark>" + text.slice(idx + term.length);
-  }
+function saveCart(){ localStorage.setItem(KEY, JSON.stringify(cart)); renderBar(); renderHeader(); }
+function totalItems(){ return Object.values(cart).reduce((s,v)=>s+v,0); }
+function totalPrice(){ return Object.entries(cart).reduce((s,[id,q])=>{ const p=PRODUCTS.find(x=>x.id===id); return s + (p? p.price*q:0);},0); }
 
-  function render(){
-    const term = searchTerm.trim().toLowerCase();
+function toast(msg){
+  const t = document.getElementById("toast");
+  t.textContent = msg; t.classList.add("show");
+  clearTimeout(t._h); t._h = setTimeout(()=>t.classList.remove("show"), 2000);
+}
 
-    let list = products.filter(p => activeCat === "all" || p.cat === activeCat);
+function renderCats(){
+  const el = document.getElementById("cats");
+  el.innerHTML = CATEGORIES.map(c =>
+    `<button class="cat ${c.id===currentCat?'active':''}" onclick="setCat('${c.id}')">${c.label}</button>`
+  ).join("");
+}
+function setCat(id){ currentCat = id; renderCats(); renderGrid(); }
 
-    if(term){
-      list = list.filter(p =>
-        p.name_hi.toLowerCase().includes(term) ||
-        p.name_en.toLowerCase().includes(term)
-      );
-    }
-
-    grid.innerHTML = "";
-
-    if(term){
-      searchMeta.innerHTML = list.length
-        ? `<b>${list.length}</b> सामान मिला "<b>${searchTerm}</b>" के लिए`
-        : "";
-    } else {
-      searchMeta.innerHTML = "";
-    }
-
-    if(list.length === 0){
-      grid.innerHTML = `
-        <div class="no-results" style="grid-column:1/-1;">
-          <div class="emoji">🔎</div>
-          कोई सामान नहीं मिला। कृपया दूसरे नाम से खोजें या हमें व्हाट्सएप करें।
-        </div>`;
-      return;
-    }
-
-    list.forEach(p => {
-      const msg = encodeURIComponent(`नमस्ते RS Grocery Shop, मुझे यह ऑर्डर करना है: ${p.name_hi} (${p.qty}) - ₹${p.price}`);
-      const card = document.createElement('div');
-      card.className = "card";
-      card.innerHTML = `
-        <div class="price-tag">₹${p.price}</div>
-        <div class="card-top">
-  <img src="${p.icon}" class="product-img" width="60" height="60">
-</div>
-        <div class="card-body">
-          <div class="name-hi">${highlight(p.name_hi, term)}</div>
-          <div class="name-en">${p.name_en}</div>
-          <div class="qty">${p.qty}</div>
-          <a class="order-btn" href="https://wa.me/${phone}?text=${msg}" target="_blank" rel="noopener">💬 ऑर्डर करें</a>
+function renderGrid(){
+  const grid = document.getElementById("grid");
+  const q = searchQ.trim().toLowerCase();
+  const filtered = PRODUCTS.filter(p =>
+    (currentCat==="all"||p.category===currentCat) &&
+    (q===""|| p.name.toLowerCase().includes(q) || (p.nameHi||"").includes(searchQ))
+  );
+  if(!filtered.length){ grid.innerHTML = `<div class="empty" style="grid-column:1/-1">कोई प्रोडक्ट नहीं मिला।</div>`; return; }
+  grid.innerHTML = filtered.map(p => {
+    const qty = localQty[p.id] ?? 1;
+    return `<article class="card">
+      <div class="imgwrap">
+        <img src="${p.image}" alt="${p.name}" loading="lazy" />
+        <div class="price-chip">₹${p.price}/${p.unit}</div>
+      </div>
+      <div class="body">
+        <h3>${p.nameHi||p.name}</h3>
+        <div class="sub">${p.name}</div>
+        <div class="row">
+          <div class="stepper">
+            <button onclick="stepQty('${p.id}',-1)">−</button>
+            <input type="text" value="${qty}" data-id="${p.id}" oninput="setLocal('${p.id}',this.value)" />
+            <button onclick="stepQty('${p.id}',1)">+</button>
+          </div>
+          <div class="total"><div class="l">Total</div><div class="v" id="lt-${p.id}">₹${p.price*qty}</div></div>
         </div>
-      `;
-      grid.appendChild(card);
-    });
+        <div class="actions">
+          <button class="btn add" onclick="addToCart('${p.id}')">🛍️ Add</button>
+          <button class="btn buy" onclick="buyNow('${p.id}')">⚡ Buy Now</button>
+        </div>
+      </div>
+    </article>`;
+  }).join("");
+}
+function setLocal(id,val){
+  const n = Math.max(1,Math.min(50, parseInt(val)||1));
+  localQty[id] = n;
+  const p = PRODUCTS.find(x=>x.id===id);
+  const el = document.getElementById("lt-"+id); if(el) el.textContent = "₹"+(p.price*n);
+}
+function stepQty(id,d){
+  const cur = localQty[id] ?? 1;
+  const n = Math.max(1,Math.min(50, cur+d));
+  localQty[id] = n; renderGrid();
+}
+function addToCart(id){
+  const q = localQty[id] ?? 1;
+  cart[id] = (cart[id]||0) + q;
+  saveCart();
+  toast(`${PRODUCTS.find(p=>p.id===id).nameHi} कार्ट में जोड़ा गया`);
+}
+function buyNow(id){
+  const q = localQty[id] ?? 1;
+  cart[id] = q; saveCart(); openCheckout();
+}
+
+function renderHeader(){
+  const t = totalItems();
+  const b = document.getElementById("hdrBadge");
+  if(t>0){ b.textContent = t; b.style.display=""; } else b.style.display="none";
+}
+function renderBar(){
+  const t = totalItems();
+  const bar = document.getElementById("bar");
+  if(t===0){ bar.classList.add("hidden"); return; }
+  bar.classList.remove("hidden");
+  document.getElementById("barItems").textContent = t;
+  document.getElementById("barBadge").textContent = t;
+  document.getElementById("barTotal").textContent = totalPrice();
+}
+
+function openCart(){
+  renderCartBody();
+  document.getElementById("cartOverlay").classList.add("open");
+}
+function closeCart(){ document.getElementById("cartOverlay").classList.remove("open"); }
+function renderCartBody(){
+  const body = document.getElementById("cartBody");
+  const entries = Object.entries(cart);
+  if(!entries.length){
+    body.innerHTML = `<div class="empty">कार्ट खाली है। <br><br><button class="btn brand big" onclick="closeCart()">Shop करें</button></div>`;
+    return;
   }
+  const items = entries.map(([id,q])=>{
+    const p = PRODUCTS.find(x=>x.id===id); if(!p) return "";
+    return `<div class="cart-item">
+      <img src="${p.image}" alt="">
+      <div class="info">
+        <div class="n">${p.nameHi||p.name}</div>
+        <div class="p">₹${p.price} × ${q} ${p.unit} = <b>₹${p.price*q}</b></div>
+      </div>
+      <div class="stepper">
+        <button onclick="cartStep('${id}',-1)">−</button>
+        <input type="text" value="${q}" readonly>
+        <button onclick="cartStep('${id}',1)">+</button>
+      </div>
+      <button class="rm" onclick="cartRemove('${id}')">हटाएँ</button>
+    </div>`;
+  }).join("");
+  body.innerHTML = items +
+    `<div class="summary"><span>कुल</span><span>₹${totalPrice()}</span></div>
+     <div style="margin-top:16px;display:grid;gap:10px">
+       <button class="btn brand big" onclick="openCheckout()">Checkout करें →</button>
+       <button class="btn add big" oneclick="clearCart()">कार्ट खाली करें</button>
+     </div>`;
+}
+function cartStep(id,d){ const n=(cart[id]||0)+d; if(n<=0) delete cart[id]; else cart[id]=Math.min(50,n); saveCart(); renderCartBody(); }
+function cartRemove(id){ delete cart[id]; saveCart(); renderCartBody(); }
+function clearCart(){ cart={}; saveCart(); renderCartBody(); }
 
-  searchInput.addEventListener('input', (e) => {
-    searchTerm = e.target.value;
-    searchClear.classList.toggle('show', searchTerm.length > 0);
-    render();
+function openCheckout(){
+  closeCart();
+  renderCoBody();
+  document.getElementById("coOverlay").classList.add("open");
+}
+function closeCo(){ document.getElementById("coOverlay").classList.remove("open"); }
+function renderCoBody(){
+  const entries = Object.entries(cart);
+  if(!entries.length){
+    document.getElementById("coBody").innerHTML = `<div class="empty">कार्ट खाली है।</div>`; return;
+  }
+  const list = entries.map(([id,q])=>{
+    const p = PRODUCTS.find(x=>x.id===id); if(!p) return "";
+    return `<div style="display:flex;justify-content:space-between;font-size:14px;padding:6px 0"><span>${p.nameHi||p.name} × ${q}</span><b>₹${p.price*q}</b></div>`;
+  }).join("");
+  document.getElementById("coBody").innerHTML = `
+    <div style="background:#fff;border:1px solid var(--border);border-radius:12px;padding:14px;margin-bottom:16px">
+      ${list}
+      <div class="summary"><span>कुल</span><span>₹${totalPrice()}</span></div>
+    </div>
+    <form id="coForm" onsubmit="placeOrder(event)">
+      <div class="field"><label>नाम</label><input required id="cName" placeholder="आपका नाम"></div>
+      <div class="field"><label>फोन नंबर</label><input required type="tel" id="cPhone" placeholder="10-digit mobile"></div>
+      <div class="field"><label>पता (delivery के लिए)</label><textarea id="cAddr" rows="3" placeholder="घर, गली, इलाका"></textarea></div>
+      <button type="submit" class="btn wa big">📱 WhatsApp पर ऑर्डर भेजें</button>
+      <p style="font-size:12px;color:var(--muted);margin:12px 0 0;text-align:center">Submit करने पर आप सीधे WhatsApp पर redirect होंगे — कोई SMS/OTP नहीं।</p>
+    </form>`;
+}
+function placeOrder(e){
+  e.preventDefault();
+  const name = document.getElementById("cName").value.trim();
+  const phone = document.getElementById("cPhone").value.trim();
+  const addr = document.getElementById("cAddr").value.trim();
+  const orderId = "RS"+Math.floor(100000+Math.random()*900000);
+  const lines = Object.entries(cart).map(([id,q],i)=>{
+    const p = PRODUCTS.find(x=>x.id===id);
+    return `${i+1}. ${p.name} (${p.nameHi||""}) — ${q} ${p.unit} × ₹${p.price} = ₹${p.price*q}`;
   });
+  const msg = [
+    `नमस्ते RS Grocery,`,
+    `मुझे यह ऑर्डर चाहिए (Order #${orderId}):`,
+    ``,
+    ...lines,
+    ``,
+    `कुल: ₹${totalPrice()}`,
+    ``,
+    `नाम: ${name}`,
+    `फोन: ${phone}`,
+    addr ? `पता: ${addr}` : ``,
+    ``,
+    `कृपया कन्फर्म करें। धन्यवाद!`
+  ].filter(Boolean).join("\n");
+  const url = `https://wa.me/${WHATSAPP_NUMBER}?text=${encodeURIComponent(msg)}`;
+  cart = {}; saveCart(); closeCo();
+  toast("WhatsApp पर redirect हो रहा है…");
+  window.location.href = url;
+}
 
-  searchClear.addEventListener('click', () => {
-    searchTerm = "";
-    searchInput.value = "";
-    searchClear.classList.remove('show');
-    searchInput.focus();
-    render();
-  });
+function showHome(){ closeCart(); closeCo(); window.scrollTo({top:0,behavior:"smooth"}); }
 
-  catNav.addEventListener('click', (e) => {
-    if(!e.target.classList.contains('cat-chip')) return;
-    document.querySelectorAll('.cat-chip').forEach(c => c.classList.remove('active'));
-    e.target.classList.add('active');
-    activeCat = e.target.dataset.cat;
-    render();
-  });
+document.getElementById("search").addEventListener("input", e => { searchQ = e.target.value; renderGrid(); });
 
-  render();
+renderCats(); renderGrid(); renderBar(); renderHeader();
 </script>
-
 </body>
 </html>
